@@ -12,7 +12,7 @@
               "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
           }
       },
-      "_artifactsLocationRedHatTemplate": {
+      "_artifactsLocationWLSTemplate": {
           "defaultValue": "[if(contains(parameters('_artifactsLocation'), 'githubusercontent'), parameters('_artifactsLocation'), deployment().properties.templateLink.uri)]",
           "type": "string",
           "metadata": {
@@ -330,7 +330,7 @@
             "autoUpgradeMinorVersion":true,
             "settings":{
                "fileUris":[
-                  "[uri(parameters('_artifactsLocationRedHatTemplate'), concat(variables('name_scriptFile'), parameters('_artifactsLocationSasToken')))]"
+                  "[uri(parameters('_artifactsLocationWLSTemplate'), concat(variables('name_scriptFile'), parameters('_artifactsLocationSasToken')))]"
                ],
                "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('wlsSASurl'),' ',parameters('jdkSASurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
             }
