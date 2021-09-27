@@ -9,7 +9,7 @@ function echo_stderr ()
 #Function to display usage message
 function usage()
 {
-  echo_stderr "./installWeblogic.sh <acceptOTNLicenseAgreement> <otnusername> <otnpassword> <shiphomeurl> <jdkurl> <wlsversion> <jdkversion>"
+  echo_stderr "./installWeblogic.sh <wlsSASurl> <jdkSASurl> <wlsversion> <jdkversion>"
 }
 
 
@@ -282,31 +282,10 @@ then
     exit 1
 fi
 
-export acceptOTNLicenseAgreement="$1"
-export otnusername="$2"
-export otnpassword="$3"
-export shiphomeurl="$4"
-export jdkurl="$5"
-export wlsversion="$6"
-export jdkversion="$7"
-
-if [ -z "$acceptOTNLicenseAgreement" ];
-then
-        echo _stderr "acceptOTNLicenseAgreement is required. Value should be either Y/y or N/n"
-        exit 1
-fi
-
-if [[ ! ${acceptOTNLicenseAgreement} =~ ^[Yy]$ ]];
-then
-    echo "acceptOTNLicenseAgreement value not specified as Y/y (yes). Exiting installation Weblogic Server process."
-    exit 1
-fi
-
-if [[ -z "$otnusername" || -z "$otnpassword" ]]
-then
-        echo_stderr "otnusername or otnpassword is required. "
-        exit 1
-fi
+export wlsSASurl="$1"
+export jdkSASurl="$2"
+export wlsversion="$3"
+export jdkversion="$4"
 
 export WLS_VER=$wlsversion
 export WEBLOGIC_DEPLOY_TOOL=https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
@@ -344,13 +323,11 @@ cleanup
 
 #download jdk from OTN
 echo "Downloading jdk from OTN..."
-curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $jdkurl
-
-#validateJDKZipCheckSum $BASE_DIR/jdk-8u131-linux-x64.tar.gz
+wget -q $jdkSASurl
 
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
-curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
+wget -q $wlsSASurl
 
 #download Weblogic deploy tool 
 

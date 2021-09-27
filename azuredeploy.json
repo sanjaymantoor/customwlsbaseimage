@@ -18,16 +18,16 @@
             "description":"Virtual Machine Name."
          }
       },
-      "shiphomeurl":{
+      "wlsSASurl":{
          "type":"string",
          "metadata":{
-            "description":"Link to WLS shiphome location on OTN"
+            "description":"Azure SAS URL for WLS shiphome location"
          }
       },
-      "jdkurl":{
+      "jdkSASurl":{
          "type":"string",
          "metadata":{
-            "description":"Link to jdk location on OTN"
+            "description":"Azure SAS URL for JDK location"
          }
       },
       "wlsversion":{
@@ -57,24 +57,6 @@
          "type":"securestring",
          "metadata":{
             "description":"SSH Key or password for the Virtual Machine. SSH key is recommended."
-         }
-      },
-      "acceptOTNLicenseAgreement":{
-         "type":"string",
-         "metadata":{
-            "description":"Do you agree to provide OTN credentials to accept OTN License Agreement? Enter Y or y to agree, else N or n"
-         }
-      },
-      "otnAccountUsername":{
-         "type":"string",
-         "metadata":{
-            "description":"Username for your Oracle Technology Network account"
-         }
-      },
-      "otnAccountPassword":{
-         "type":"securestring",
-         "metadata":{
-            "description":"Password for your Oracle Technology Network account"
          }
       },
       "dnsLabelPrefix":{
@@ -294,19 +276,7 @@
                   "vhd":{
                      "uri":"[concat(variables('storageContainerUri'), parameters('vmName'), '-OS.vhd')]"
                   }
-               },
-               "dataDisks":[
-                  {
-                     "lun":0,
-                     "name":"[concat(parameters('vmName'),'-DD')]",
-                     "createOption":"Empty",
-                     "vhd":{
-                        "uri":"[concat(variables('storageContainerUri'), parameters('vmName'), '-DD.vhd')]"
-                     },
-                     "caching":"None",
-                     "diskSizeGB":900
-                  }
-               ]
+               }
             },
             "networkProfile":{
                "networkInterfaces":[
@@ -340,7 +310,7 @@
                "fileUris":[
                   "https://raw.githubusercontent.com/jacobt123/wlsbaseimage/master/genericinstall.sh"
                ],
-               "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('acceptOTNLicenseAgreement'),' ',parameters('otnAccountUsername'),' ',parameters('otnAccountPassword'),' ',parameters('shiphomeurl'),' ',parameters('jdkurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
+               "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('wlsSASurl'),' ',parameters('jdkSASurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
             }
          }
       }
@@ -358,12 +328,6 @@
       "OSVHDSaaS":{
          "type":"string",
          "value":"[concat(variables('storageContainerUri'),parameters('vmName'),'-OS.vhd?',listAccountSas(variables('StorageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken)]"
-      },
-      "DDVHDSaaS":{
-         "type":"string",
-         "value":"[concat(variables('storageContainerUri'),parameters('vmName'),'-DD.vhd?',listAccountSas(variables('StorageAccountName'), '2018-07-01', parameters('accountSasProperties')).accountSasToken)]"
       }
-
-
    }
 }
