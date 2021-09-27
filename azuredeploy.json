@@ -332,7 +332,7 @@
                "fileUris":[
                   "[uri(parameters('_artifactsLocationWLSTemplate'), concat(variables('name_scriptFile'), parameters('_artifactsLocationSasToken')))]"
                ],
-               "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('wlsSASurl'),' ',parameters('jdkSASurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
+               "commandToExecute":"[concat('sh ',' ',variables('name_scriptFile'),' <<< \"',parameters('wlsSASurl'),' ',parameters('jdkSASurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'),' \"')]"
             }
          }
       }

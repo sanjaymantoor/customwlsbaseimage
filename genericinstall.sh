@@ -276,22 +276,13 @@ function installWLS()
 CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export BASE_DIR="$(readlink -f ${CURR_DIR})"
 
-if [ $# -ne 4 ]
-then
-    usage
-    exit 1
-fi
-
-export wlsSASurl="$1"
-export jdkSASurl="$2"
-export wlsversion="$3"
-export jdkversion="$4"
+read wlsSASurl jdkSASurl wlsversion jdkversion
 
 echo "Passed arguments :"
-echo "$1"
-echo "$2"
-echo "$3"
-echo "$4"
+echo "$wlsSASurl"
+echo "$jdkSASurl"
+echo "$wlsversion"
+echo "$jdkversion"
 
 export WLS_VER=$wlsversion
 export WEBLOGIC_DEPLOY_TOOL=https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
