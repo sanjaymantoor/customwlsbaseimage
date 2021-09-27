@@ -323,11 +323,11 @@ cleanup
 
 #download jdk from OTN
 echo "Downloading jdk from OTN..."
-wget -q $jdkSASurl
+curl  $jdkSASurl --output jdk-$jdkversion.tar.gz
 
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
-wget -q $wlsSASurl
+curl $wlsSASurl --output fmw-$wlsversion.zip
 
 #download Weblogic deploy tool 
 
