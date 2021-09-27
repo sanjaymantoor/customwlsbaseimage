@@ -287,6 +287,12 @@ export jdkSASurl="$2"
 export wlsversion="$3"
 export jdkversion="$4"
 
+echo "Passed arguments :"
+echo "$1"
+echo "$2"
+echo "$3"
+echo "$4"
+
 export WLS_VER=$wlsversion
 export WEBLOGIC_DEPLOY_TOOL=https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
 export POSTGRESQL_JDBC_DRIVER_URL=https://jdbc.postgresql.org/download/postgresql-42.2.8.jar 
@@ -327,7 +333,7 @@ curl  $jdkSASurl --output jdk-$jdkversion.tar.gz
 
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
-curl $wlsSASurl --output fmw-$wlsversion.zip
+curl $wlsSASurl --output fmw_$wlsversion.zip
 
 #download Weblogic deploy tool 
 
