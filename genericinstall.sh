@@ -9,7 +9,7 @@ function echo_stderr ()
 #Function to display usage message
 function usage()
 {
-  echo_stderr "./installWeblogic.sh <wlsSASurl> <jdkSASurl> <wlsversion> <jdkversion>"
+  echo_stderr "./genericinstall.sh <wlsSASurl> <jdkSASurl> <wlsversion> <jdkversion>"
 }
 
 
@@ -27,6 +27,7 @@ function cleanup()
     rm -rf $WLS_PATH/silent-template
 
     rm -rf $WLS_JAR
+    
     echo "Cleanup completed."
 }
 
@@ -95,8 +96,11 @@ function copyJDBCDriversToWeblogicClassPath()
 
      chown $username:$groupname ${WL_HOME}/server/lib/${POSTGRESQL_JDBC_DRIVER}
      chown $username:$groupname ${WL_HOME}/server/lib/${MSSQL_JDBC_DRIVER}
-
+     
      echo "Copied JDBC Drivers to Weblogic CLASSPATH"
+     
+     echo "Cleaning up download JDBCD drivers files"
+     rm -f ${POSTGRESQL_JDBC_DRIVER} ${MSSQL_JDBC_DRIVER}
 }
 
 function modifyWLSClasspath()
